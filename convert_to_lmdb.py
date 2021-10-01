@@ -10,6 +10,7 @@ from PIL import Image
 
 import example_pb2
 from meta import Meta
+from os import path
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--data_dir', default='./data', help='directory to SVHN (format 1) folders and write the converted files')
@@ -53,7 +54,7 @@ class ExampleReader(object):
         if self._example_pointer == self._num_examples:
             return None
         path_to_image_file = self._path_to_image_files[self._example_pointer]
-        index = int(path_to_image_file.split('/')[-1].split('.')[0]) - 1
+        index = int(path.splitext(path.basename(path_to_image_file))[0]) - 1
         self._example_pointer += 1
 
         attrs = ExampleReader._get_attrs(digit_struct_mat_file, index)
